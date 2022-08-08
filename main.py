@@ -60,8 +60,8 @@ class CFScraper:
 
         if response.status_code != 200:
             raise Exception(
-                f"ERROR: {self.addon_name} failed at download -- error code {response.status_code}"
-                f"\n -----\n{response.text}\n-----"
+                f"ERROR: {self.addon_name} failed at download on url"
+                f" {self.curseforge_info_url} -- error code {response.status_code}"
             )
 
         soup = Soup(response.content, features="html.parser")
