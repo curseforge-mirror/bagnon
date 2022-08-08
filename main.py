@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 import logging
 import cloudscraper
 from bs4 import BeautifulSoup as Soup
@@ -23,7 +24,7 @@ log = logging.getLogger()
 class CFScraper:
     def __init__(self, addon_name):
         self.scraper = cloudscraper.create_scraper(
-            browser={"browser": "firefox", "platform": "windows", "mobile": False},
+            browser={},  # RNG Browser Agents
             interpreter='nodejs'
         )
 
@@ -60,10 +61,11 @@ class CFScraper:
         response = self.scraper.get(self.curseforge_info_url)
 
         if response.status_code != 200:
-            raise Exception(
+            log.error(
                 f"ERROR: {self.addon_name} failed at download on url"
                 f" {self.curseforge_info_url} -- error code {response.status_code}"
             )
+            return None
 
         soup = Soup(response.content, features="html.parser")
 
@@ -131,7 +133,16 @@ class CFScraper:
 
     def run(self):
         log.info(f"Pulling files for addon: {self.addon_name}")
-        mapping = self.get_download_mapping()
+
+        count = 0
+        while count < 6:
+            mapping = self.get_download_mapping()
+            if mapping:
+                break
+            log.warning("Didn't find mapping, retrying...")
+            time.sleep(count)
+            count += 1
+
         if not mapping:
             raise Exception("No Downloads Found")
         log.info("Mapping Finalized! Downloading Files from CDN...")
