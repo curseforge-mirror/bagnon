@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 import logging
 import cloudscraper
 from bs4 import BeautifulSoup as Soup
@@ -23,7 +24,8 @@ log = logging.getLogger()
 class CFScraper:
     def __init__(self, addon_name):
         self.scraper = cloudscraper.create_scraper(
-            browser={"browser": "firefox", "platform": "windows", "mobile": False}
+            browser={"browser": "firefox", "platform": "windows", "mobile": False},
+            interpreter='js2py'
         )
 
         if addon_name == cf_mirror_addon_name:
@@ -45,6 +47,7 @@ class CFScraper:
         }
 
     def get_file_name(self, full_href):
+        time.sleep(1)
         download_url = full_href.replace(self.curseforge_download_base, self.curseforge_download_full)
         response = self.scraper.get(download_url)
         soup = Soup(response.content, features="html.parser")
