@@ -4,7 +4,7 @@ import logging
 import cloudscraper
 from bs4 import BeautifulSoup as Soup
 
-cf_mirror_addon_name = "Enter Addon Name Here For Local Testing"
+cf_mirror_addon_name = "bagnon"
 
 handler = logging.StreamHandler(sys.stdout)
 
@@ -57,6 +57,13 @@ class CFScraper:
 
     def get_download_mapping(self):
         response = self.scraper.get(self.curseforge_info_url)
+
+        if response.status_code != 200:
+            raise Exception(
+                f"ERROR: {self.addon_name} failed at download -- error code {response.status_code}"
+                f"\n -----\n{response.text}\n-----"
+            )
+
         soup = Soup(response.content, features="html.parser")
 
         download_element_selector = "div[class='cf-sidebar-inner'] > *"
