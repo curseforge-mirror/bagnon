@@ -4,7 +4,7 @@ import logging
 import cloudscraper
 from bs4 import BeautifulSoup as Soup
 
-cf_mirror_addon_name = "bagnon"
+cf_mirror_addon_name = "Enter Addon Name Here For Local Testing"
 
 handler = logging.StreamHandler(sys.stdout)
 
@@ -24,7 +24,7 @@ class CFScraper:
     def __init__(self, addon_name):
         self.scraper = cloudscraper.create_scraper(
             browser={"browser": "firefox", "platform": "windows", "mobile": False},
-            interpreter='js2py'
+            interpreter='nodejs'
         )
 
         if addon_name == cf_mirror_addon_name:
