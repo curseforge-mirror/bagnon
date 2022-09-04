@@ -17,7 +17,6 @@ def load_setup():
         return json.loads(file.read())
 
 
-<<<<<<< HEAD
 def rewrite_main_workflow(addon_url_name, addon_id_name):
     with open("./.github/workflows/main.yml", "r") as file:
         filedata = file.read()
@@ -26,12 +25,6 @@ def rewrite_main_workflow(addon_url_name, addon_id_name):
             .replace("ADDON_NAME_HERE", addon_url_name)
             .replace("ADDON_ID_HERE", addon_id_name)
         )
-=======
-def rewrite_main_workflow(addon_url_name):
-    with open("./.github/workflows/main.yml", "r") as file:
-        filedata = file.read()
-        filedata = filedata.replace("# ", "").replace("ADDON_NAME_HERE", addon_url_name)
->>>>>>> 978cb49711ba3029ff17f83423d65ed10a02a0f3
 
     with open("./.github/workflows/main.yml", "w") as file:
         file.write(filedata)
@@ -45,11 +38,7 @@ def rewrite_readme(addon_author, addon_url_name, addon_plain_name):
 
 
 def export_variables_to_github_env(addon_author, addon_url_name, addon_plain_name):
-<<<<<<< HEAD
     env_file = os.getenv("GITHUB_ENV")
-=======
-    env_file = os.getenv('GITHUB_ENV')
->>>>>>> 978cb49711ba3029ff17f83423d65ed10a02a0f3
 
     with open(env_file, "a") as myfile:
         myfile.write(f"ADDON_AUTHOR={addon_author}\nADDON_NAME={addon_plain_name}")
@@ -59,17 +48,10 @@ if __name__ == "__main__":
     setup_data = load_setup()
 
     addon_author = setup_data["addon_author"]
-<<<<<<< HEAD
     addon_id = setup_data["curseforge_addon_id"]
     addon_url_name = setup_data["curseforge_addon_url_name"]
     addon_plain_name = setup_data["addon_name"]
 
     rewrite_main_workflow(addon_url_name, addon_id)
-=======
-    addon_url_name = setup_data["curseforge_addon_url_name"]
-    addon_plain_name = setup_data["addon_name"]
-
-    rewrite_main_workflow(addon_url_name)
->>>>>>> 978cb49711ba3029ff17f83423d65ed10a02a0f3
     rewrite_readme(addon_author, addon_url_name, addon_plain_name)
     export_variables_to_github_env(addon_author, addon_url_name, addon_plain_name)
