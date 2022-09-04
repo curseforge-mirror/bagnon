@@ -1,6 +1,6 @@
 # Bagnon Mirror
 
-This is a mirror of tullamods's Bagnon
+This is a mirror of jaliborc's Bagnon
 
 - [Curseforge URL](https://www.curseforge.com/wow/addons/bagnon)
 
